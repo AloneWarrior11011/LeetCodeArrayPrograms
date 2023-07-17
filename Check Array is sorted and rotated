@@ -1,0 +1,32 @@
+class Solution {
+    public boolean check(int[] nums) {
+        int pairCount = 0;
+        int size = nums.length;
+
+        for(int i = 1; i<size; i++)
+        {
+
+            /*  nums = [3,4,5,1,2]
+                nums[i(1)-1 = 0] > nums[1]
+                3 > 4 = no then pairCount = 0
+                4 > 5 = no -------""-------
+                5 > 1 = yes then pairCount = 1
+                1 > 2 = no then ------""--------
+
+                // corner case 
+                nums = [1,1,1]
+                1 > 1 = no -> pairCount = 0
+                1 > 1 = no -> ---""----
+                but array is sorted and rotated in that case we have return true;
+                that means pairCount < 1 
+             */
+            if(nums[i-1] > nums[i]){ pairCount++; }
+        }
+
+       if(nums[size-1] > nums[0]) 
+       {
+           pairCount++;
+       }
+       return pairCount<=1;
+    }
+}
