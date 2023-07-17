@@ -1,0 +1,25 @@
+class Solution {
+    public void rotate(int[] nums, int k) {
+       int arr[] = new int[nums.length];
+       for(int i = 0; i<nums.length; i++)
+       {
+           arr[(i+k) % nums.length] = nums[i];
+           /**
+            for nums = [-1,-100,3,99] for k = 2 (rotate by 2 steps)
+            Iteration - 1 -> i = 0
+            arr[(0+2)%4] = nums[i] -> (-1) which is store at an index 2 in ''arr'' array.
+            i = 1
+            arr[3 % 4 = 3] = nums[1] -> (-100) which is store at an index 3 in 'arr' array.
+            i = 2
+            arr[4%4] = nums[2] ->(2) which is store at an index 0 in 'arr' array
+            i = 3
+            arr[5%4 = 1] = nums[3] -> (99) which store at an index 1 in 'arr' array.
+           
+            */
+       }
+       for(int i = 0; i<arr.length; i++)
+       {
+           nums[i] = arr[i];
+       }
+    }
+}
