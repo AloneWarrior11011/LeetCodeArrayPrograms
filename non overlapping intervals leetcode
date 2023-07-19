@@ -1,0 +1,82 @@
+/*
+Given an array of intervals intervals where intervals[i] = [starti, endi], return the minimum number of 
+intervals you need to remove to make the rest of the intervals non-overlapping.
+
+Example 1:
+
+Input: intervals = [[1,2],[2,3],[3,4],[1,3]]
+Output: 1
+Explanation: [1,3] can be removed and the rest of the intervals are non-overlapping.
+Example 2:
+
+Input: intervals = [[1,2],[1,2],[1,2]]
+Output: 2
+Explanation: You need to remove two [1,2] to make the rest of the intervals non-overlapping.
+Example 3:
+
+Input: intervals = [[1,2],[2,3]]
+Output: 0
+Explanation: You don't need to remove any of the intervals since they're already non-overlapping.
+
+*/
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        
+        // we have to sort the interval in the ascending order of their start time.
+        sort(begin(intervals),end(intervals));
+        int size = intervals.size();
+        // here we take count which keep the track the of no. of overlaping interval removal 
+        int count = 0;
+        // next we taking the two pointe which is i and j where i point to i and j point to i+1;
+        int i = 0, j = 1;
+        while(j < size)
+        {
+            vector<int> curr_interval=intervals[i];
+            vector<int> next_interval=intervals[j];
+
+            // here we take the cs and ce which current start and current end 
+            /*
+                after  sorting the intervals it'll be 
+                 [1,2],[1,3],[2,3],[3,4]
+
+                 above we took two vectors where curr_interval point to the ith index which is [1,2]
+                 and jth index which is point to the [1,3].
+                 and in that we gonna take cs(current start) and ce(current end) who going to point cs = 1 and ce=2
+                 ns = 1 and ne = 3
+                 
+                 (1)----------------------(3)
+                 (1)------------(2)
+
+                  from above digram we conclude that the interval [1,3] has overlapping [1,2]
+                  then in that case we have increment our count by 1.
+
+            */
+            int cs = curr_interval[0]; // [1]
+            int ce = curr_interval[1]; // [2]
+
+            // ns (next start) and ne(next end) 
+            int ns = next_interval[0]; // [1]
+            int ne = next_interval[1]; // [3]
+
+            if(ce <= ns) // 2 <= 1 obviously not then skip this condition which is non overlapping
+            {
+                i = j;   // then at that condition update i to j now 
+                j++;     // now j incremented which is point to next interval 
+            }
+            else if(ce <= ne) // 2 <= 3 -> yes then increment j and make it count we found one overlapping interval.
+            {
+                j++;
+                count++;
+            }
+            else if(ce >= ne)  // 2 >= 3 obviously not.
+            {
+               i = j;
+               j++;
+               count++;
+            }
+        }
+        return count; // count becomes 1 that means we found one successful overlapping interval.
+    }
+};
